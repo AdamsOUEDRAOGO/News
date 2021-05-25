@@ -45,20 +45,46 @@ class NewsListFragment : Fragment() {
             adapter = this@NewsListFragment.adapter
         }
 
-
-            Singletons.newoApi.getNewsList().enqueue(object: Callback<NewsListResponse>{
-                override fun onFailure(call: Call<NewsListResponse>, t: Throwable){
-                    //TODO("Not implemented")
-                }
-                override fun onResponse(call: Call<NewsListResponse>, responce: Response<NewsListResponse>){
-                        if (response.isSucceful && response.body() != null){
-                            val newsResponse : NewsListResponse = response.body()!!
-                            adapter.updateList(newsResponse.results)
-                        }
-                }
-            })
+        val list:List<News> = getListFromCache()
+        if(list.isEmpty()) {
+            callApi()
+        }
+        else{
+            showList(list)
+        }
+    }
+    private fun getListFromCache(): List<News>{
 
     }
+
+    private fun saveListIntoCache() {
+        TODO("Not yet implemented")
+    }
+
+    private fun callApi() {
+        Singletons.newoApi.getNewsList().enqueue(object : Callback<NewsListResponse> {
+            override fun onFailure(call: Call<NewsListResponse>, t: Throwable) {
+                //TODO("Not implemented")
+            }
+
+            override fun onResponse(
+                call: Call<NewsListResponse>,
+                responce: Response<NewsListResponse>
+            ) {
+                if (response.isSucceful && response.body() != null) {
+                    val newsResponse: NewsListResponse = response.body()!!
+                    saveListIntoCache()
+                    showList(newsResponse.results)
+                }
+            }
+        })
+    }
+
+
+    private fun showList(newoList: List<News>) {
+                    adapter.updateList(newoList)
+    }
+
     private fun onClickedNews(id: Int) {
         findNavController().navigate(R.id.navigateToNewsDetailFragment, bundleOf(
             "newsId" to (id + 1)
