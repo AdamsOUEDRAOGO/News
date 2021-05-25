@@ -1,7 +1,7 @@
-package com.example.news24.api
+package com.example.news24.presentation.api
 
 import com.example.news24.presentation.list.News
-data class NewsResponse{
+data class NewsListResponse{
 
         val count: Int,
         val next: String,

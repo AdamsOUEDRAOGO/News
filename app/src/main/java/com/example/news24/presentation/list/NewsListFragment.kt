@@ -1,5 +1,6 @@
 package com.example.news24.presentation.list
 
+import android.accessibilityservice.GestureDescription
 import android.os.Bundle
 import android.telecom.Call
 import android.view.LayoutInflater
@@ -10,8 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news24.R
-import com.example.news24.api.NewoApi
-import com.example.news24.api.NewsResponse
+import com.example.news24.presentation.Singletons
+import com.example.news24.presentation.api.NewoApi
+import com.example.news24.presentation.api.NewsListResponse
 import javax.security.auth.callback.Callback
 
 
@@ -22,8 +24,6 @@ class NewsListFragment : Fragment() {
 
     private lateinit var recycleView: RecyclerView
     private val adapter = NewsAdapter(listOf(), ::onClickedNews)
-
-    private val  layoutManager = LinearLayoutManager(context)
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -40,24 +40,18 @@ class NewsListFragment : Fragment() {
 
         recycleView.apply {
 
-            layoutManager = this@NewsListFragment.layoutManager
+            layoutManager = LinearLayoutManager(context)
             adapter = this@NewsListFragment.adapter
         }
 
-            val retrofit: Retrofit = Builder()
-                .baseUrl("https://pokeapi.co/api/v2/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                .build()
 
-            val newoApi: NewoApi = retrofit.create(NewoApi::class.java)
-
-            newoApi.getNewsList().enqueue(object: Callback<NewsResponse>{
-                override fun onFailure(call: Call<NewsResponse>, t: Throwable){
+            Singletons.newoApi.getNewsList().enqueue(object: Callback<NewsListResponse>{
+                override fun onFailure(call: Call<NewsListResponse>, t: Throwable){
                     //TODO("Not implemented")
                 }
-                override fun onResponse(call: Call<NewsResponse>, responce: Response<NewsResponse>){
+                override fun onResponse(call: Call<NewsListResponse>, responce: Response<NewsListResponse>){
                         if (response.isSucceful && response.body() != null){
-                            val newsResponse : NewsResponse = response.body()!!
+                            val newsResponse : NewsListResponse = response.body()!!
                             adapter.updateList(newsResponse.results)
                         }
                 }
