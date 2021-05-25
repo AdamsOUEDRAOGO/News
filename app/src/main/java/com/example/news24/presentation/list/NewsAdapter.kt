@@ -9,7 +9,7 @@ import com.example.news24.News
 import com.example.news24.R
 import com.example.news24.R.layout.news_item
 
-class NewsAdapter(private var dataSet: List<News>, var listener:((News) -> Unit)? = null) :
+class NewsAdapter(private var dataSet: List<News>, var listener:((Int) -> Unit)? = null) :
         RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
 

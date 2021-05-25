@@ -13,6 +13,7 @@ import com.example.news24.R
 import com.example.news24.presentation.Singletons
 import com.example.news24.presentation.api.NewsDetailResponse
 import com.example.news24.presentation.api.NewsListResponse
+import okhttp3.Response
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -37,24 +38,24 @@ class NewsDetailFragment : Fragment() {
     }
 
     private fun callApi() {
-        Singletons.newoApi.getNewsDetail(id: "1").enqueue(object : Callback<NewsDetailResponse>{
+        val id: Int = arguments?.getInt("newsId") ?: -1
+        Singletons.newoApi.getNewsDetail(id: "1").enqueue(object : Callback<NewsDetailResponse>run {
             override fun onFailure(
-                    call: Call<NewsDetailResponse>,
-                    t: Throwable
-            ){
+                call: Call<NewsDetailResponse>,
+                t: Throwable
+            ) {
 
             }
+
             override fun onResponse(
-                    call: Call<NewsDetailResponse>,
-                    responce: Response<NewsListResponse>
-            )
-            {
-                if (response.isSucceful && response.body() != null)
-                {
+                call: Call<NewsDetailResponse>,
+                responce: Response<NewsListResponse>
+            ) {
+                if (response.isSucceful && response.body() != null) {
                     textViewName.text = response.body()!!.name
                 }
-                }
             }
+        }
         )
         TODO("Not yet implemented")
     }

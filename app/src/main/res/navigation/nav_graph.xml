@@ -21,6 +21,12 @@
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_news_detail">
 
+        <argument
+            android:name="newsId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
+
         <action
             android:id="@+id/navigateToNewsListFragment"
             app:destination="@id/NewsListFragment" />

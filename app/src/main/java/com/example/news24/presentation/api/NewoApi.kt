@@ -12,5 +12,5 @@ interface NewoApi {
     fun getNewsList : Call<NewsListResponse>
 
     @GET("value: pokemon{id}")
-    fun getNewsDetail(@Path (value: "id") id: String) : Call<NewsResponse>
+    fun getNewsDetail(@Path (value: "id") id: Int) : Call<NewsResponse>
 }
