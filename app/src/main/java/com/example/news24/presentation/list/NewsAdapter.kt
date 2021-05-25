@@ -3,6 +3,7 @@ package com.example.news24.presentation.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news24.News
@@ -19,10 +20,12 @@ class NewsAdapter(private var dataSet: List<News>, var listener:((Int) -> Unit)?
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView
+        val imageView: ImageView
 
         init {
             // Define click listener for the ViewHolder's View.
-            val textView: TextView = view.findViewById(R.id.news_name)
+            textView = view.findViewById(R.id.news_name)
+            imageView = view.findViewById(R.id.news_img)
         }
     }
     fun updateList(list: List<News>){
@@ -49,7 +52,14 @@ class NewsAdapter(private var dataSet: List<News>, var listener:((Int) -> Unit)?
         viewHolder.itemView.setOnClickListener{
             listener?.invoke(news)
         }
+
+        Glide
+            .with(viewHolder.itemView.context)
+            .load(string "https://raw.githubusercontent.com/PokeAPI/sprites/pokemon/${position + 1}.png" )
+            .centerCrop()
+            .into(viewHolder.imageView);
     }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
