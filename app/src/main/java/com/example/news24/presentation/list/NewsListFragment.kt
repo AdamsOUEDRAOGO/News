@@ -1,21 +1,17 @@
 package com.example.news24.presentation.list
 
-import android.accessibilityservice.GestureDescription
 import android.os.Bundle
-import android.telecom.Call
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.news24.R
-import com.example.news24.presentation.Singletons
-import com.example.news24.presentation.api.NewoApi
-import com.example.news24.presentation.api.NewsListResponse
-import javax.security.auth.callback.Callback
 
 
 /**
@@ -25,6 +21,7 @@ class NewsListFragment : Fragment() {
 
     private lateinit var recycleView: RecyclerView
     private val adapter = NewsAdapter(listOf(), ::onClickedNews)
+    private val viewModel: NewsListViewModel by viewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -45,45 +42,12 @@ class NewsListFragment : Fragment() {
             adapter = this@NewsListFragment.adapter
         }
 
-        val list:List<News> = getListFromCache()
-        if(list.isEmpty()) {
-            callApi()
-        }
-        else{
-            showList(list)
-        }
-    }
-    private fun getListFromCache(): List<News>{
-
-    }
-
-    private fun saveListIntoCache() {
-        TODO("Not yet implemented")
-    }
-
-    private fun callApi() {
-        Singletons.newoApi.getNewsList().enqueue(object : Callback<NewsListResponse> {
-            override fun onFailure(call: Call<NewsListResponse>, t: Throwable) {
-                //TODO("Not implemented")
-            }
-
-            override fun onResponse(
-                call: Call<NewsListResponse>,
-                responce: Response<NewsListResponse>
-            ) {
-                if (response.isSucceful && response.body() != null) {
-                    val newsResponse: NewsListResponse = response.body()!!
-                    saveListIntoCache()
-                    showList(newsResponse.results)
-                }
-            }
+        viewModel.newoList.observe(viewLifecycleOwner, Observer { list ->
+            adapter.updateList(list)
         })
+
     }
 
-
-    private fun showList(newoList: List<News>) {
-                    adapter.updateList(newoList)
-    }
 
     private fun onClickedNews(id: Int) {
         findNavController().navigate(R.id.navigateToNewsDetailFragment, bundleOf(

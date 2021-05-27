@@ -1,16 +1,15 @@
 package com.example.news24.presentation.api
 
-import android.telecom.Call
-import retrofit.call
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
-
-
+import retrofit2.http.Path
 
 
 interface NewoApi {
-    @GET("value: pokemon")
-    fun getNewsList : Call<NewsListResponse>
+    @GET("news")
+    fun getNewsList(): Call<NewsListResponse>
 
-    @GET("value: pokemon{id}")
-    fun getNewsDetail(@Path (value: "id") id: Int) : Call<NewsResponse>
+    @GET("news{id}")
+    fun getNewsDetail(@Path(value: "id") id: Int) : Call<NewsResponse>
 }

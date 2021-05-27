@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.news24.News
 import com.example.news24.R
 import com.example.news24.R.layout.news_item
@@ -28,7 +29,7 @@ class NewsAdapter(private var dataSet: List<News>, var listener:((Int) -> Unit)?
             imageView = view.findViewById(R.id.news_img)
         }
     }
-    fun updateList(list: List<News>){
+    fun updateList(list: List<com.example.news24.presentation.list.News>){
         dataSet = list
         notifyDataSetChanged()
     }
@@ -55,7 +56,7 @@ class NewsAdapter(private var dataSet: List<News>, var listener:((Int) -> Unit)?
 
         Glide
             .with(viewHolder.itemView.context)
-            .load(string "https://raw.githubusercontent.com/PokeAPI/sprites/pokemon/${position + 1}.png" )
+            .load("https://raw.githubusercontent.com/PokeAPI/sprites/pokemon/${position + 1}.png" )
             .centerCrop()
             .into(viewHolder.imageView);
     }
