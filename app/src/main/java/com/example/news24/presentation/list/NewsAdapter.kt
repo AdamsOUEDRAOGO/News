@@ -50,7 +50,7 @@ class NewsAdapter(private var dataSet: List<News>, var listener:((Int) -> Unit)?
         val news : News = dataSet[position]
         viewHolder.textView.text = news.name
         viewHolder.itemView.setOnClickListener{
-            listener?.invoke(news)
+            listener?.invoke(position)
         }
 
         Glide

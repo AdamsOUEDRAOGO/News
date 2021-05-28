@@ -46,10 +46,7 @@ class NewsDetailFragment : Fragment() {
                 TODO("Not yet implemented")
             }
 
-            override fun onResponse(
-                call: Call<NewsDetailResponse>,
-                responce: Response<NewsListResponse>
-            ) {
+            override fun onResponse(call: Call<NewsDetailResponse>, response: Response<NewsDetailResponse>) {
 
                 if (response.isSuccessful && response.body() != null) {
 
