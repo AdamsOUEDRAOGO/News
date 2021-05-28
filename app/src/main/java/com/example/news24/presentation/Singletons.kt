@@ -1,5 +1,6 @@
 package com.example.news24.presentation
 
+import com.example.news24.presentation.NewoApplication.Companion.context
 import android.accessibilityservice.GestureDescription
 import com.example.news24.presentation.api.NewoApi
 import okhttp3.Cache
@@ -22,4 +23,3 @@ class Singletons {
                 .build()
                 .create(NewoApi::class.java)
     }
-}

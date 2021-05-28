@@ -1,6 +1,7 @@
 package com.example.news24.presentation
 
 import android.app.Application
+import android.content.Context
 
 class NewoApplication: Application(){
     companion object{

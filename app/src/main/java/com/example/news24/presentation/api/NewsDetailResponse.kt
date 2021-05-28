@@ -1,7 +1,7 @@
 package com.example.news24.presentation.api
 
 data class NewsDetailResponse(
-        Val nameval : String,
+        val name : String,
         val types: List<NewsSlot>
 )
 

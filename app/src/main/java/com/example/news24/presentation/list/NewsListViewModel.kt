@@ -1,6 +1,6 @@
 package com.example.news24.presentation.list
 
-import androidx.lifecycle.LiveData
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.news24.presentation.Singletons
@@ -9,8 +9,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private val <T> Response<T>.isSucceful: Boolean
-    get() {}
 
 class NewsListViewModel : ViewModel(){
 
@@ -29,7 +27,7 @@ class NewsListViewModel : ViewModel(){
             }
             override fun onResponse(call: Call<NewsListResponse>, response: Response<NewsListResponse>
             ) {
-                if (response.isSucceful && response.body() != null) {
+                if (response.isSuccessful && response.body() != null) {
                     val newsResponse: NewsListResponse = response.body()!!
                     newoList.value = NewsSuccess(newsResponse.results)
                 }
